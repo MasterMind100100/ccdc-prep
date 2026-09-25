@@ -88,55 +88,59 @@ Need to learn about
 - ignoreRhosts yes
 - HostBasedAuth no
 - PermitEmptyPasswords no
-x11forward no
+- **x11forward no**
 - maxauthtries 5
 - ciphers aes128-ctr, aes192-ctr, aes256-ctr
 - clientaliveint 900
 - clientalivecountmax 0
+- **usepam yes**
 
-usepam yes
+Users currently ssh in
+- `w`
+- `who `
+- `who -a`
+- `netstat -tnpa | grep 'ESTABLISHED.*sshd'`
 
-## Users currently ssh in
-`w`
-`who `
-`who -a`
-`netstat -tnpa | grep 'ESTABLISHED.*sshd'`
-
-## Users with SSH access / access history
-## Forgot to take note of this one, but it was an inject
-
+Users with SSH access / access history
 
 # Under construction / Didn't use
-## Only all
-`chown root:root /etc/ssh/sshd_config`
 
-## Packages:
-`apt-cache pkgnames | grep telnet rsh, tftp, talk server`
-`dpkg --list`
+Only all
+- `chown root:root /etc/ssh/sshd_config`
+
+Packages:
+- `apt-cache pkgnames | grep telnet rsh, tftp, talk server`
+- `dpkg --list`
 
 
-## Remove package:
-`apt-get --purge remove packagename`
-## seLinux 
-## WRCCDC Black team tip: 
-## "without prep and documentation before hand [selinux] can cause your services to go offline.
-`nano /etc/selinux/config`
-`SELINUX = enforcing`
+Remove package:
+- `apt-get --purge remove packagename`
 
-## Linux Hardening Guide finds
-## https://github.com/trimstray/the-practical-linux-hardening-guide/wiki/
+seLinux 
 
-## Verify only root has UID 0
-## "Multiple accounts with a UID of 0 afford more opportunity for potential intruders to guess 
-## a password for a privileged account."
-`awk -F: '$3 == 0 && $1 != "root" { print $1 }' /etc/passwd | xargs passwd -l`
+**WRCCDC Black team tip:** 
+"without prep and documentation before hand [selinux] can cause your services to go offline.
+- `nano /etc/selinux/config`
+- `SELINUX = enforcing`
 
-## Ensure all files are owned by a user and group
-## Unowned files may be caused by an intruder, by incorrect software installation or draft software removal, 
-## or by failure to remove all files belonging to a deleted account.
+Linux Hardening Guide finds
 
-## To find out all files that are not owned by any user:
-`find / -nouser`
+https://github.com/trimstray/the-practical-linux-hardening-guide/wiki/
 
-## To find out all files that are not owned by any group:
-`find / -nogroup`
+Verify only root has UID 0
+
+"Multiple accounts with a UID of 0 afford more opportunity for potential intruders to guess a password for a privileged account."
+
+- `awk -F: '$3 == 0 && $1 != "root" { print $1 }' /etc/passwd | xargs passwd -l`
+
+- Ensure all files are owned by a user and group
+
+- Unowned files may be caused by an intruder, by incorrect software installation or draft software removal, 
+
+- or by failure to remove all files belonging to a deleted account.
+
+To find out all files that are not owned by any user:
+- `find / -nouser`
+
+To find out all files that are not owned by any group:
+- `find / -nogroup`
